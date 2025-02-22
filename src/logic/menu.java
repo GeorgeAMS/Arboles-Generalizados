@@ -1,53 +1,45 @@
 package logic;
+
 import java.util.Scanner;
-import java.util.InputMismatchException;
+
 public class menu {
     public static void main(String[] args) {
-
-        arbolGeneralizado l1 = new arbolGeneralizado();
         Scanner sn = new Scanner(System.in);
-        boolean Bandera=false;
-        int Valor;
+        arbolGeneralizado arbol = new arbolGeneralizado();
+        boolean bandera = false;
 
-        do{
+        while (!bandera) {
             System.out.println("""
-            -----------------------------------------------------------------------
-                    Ingrese el numero de alguna de las siguientes opciones:
+            --------------------------------------------
+                Ingrese el número de alguna opción:
 
-                1.  Crear Arbol
+                1. Crear Árbol
                 0. Salir
-            -------------------------------------------------------------------
+            --------------------------------------------
             """);
-            Valor= sn.nextInt();
 
-            switch (Valor) {
+            int opcion = sn.nextInt();
+            sn.nextLine(); // Consumir la nueva línea
 
+            switch (opcion) {
                 case 1:
                     System.out.println("""
-                            \n Por Favor ingrese el valor con el siguiente formato ==  
-                                Padres :         {
-                                Hermanos :      ,
+                            \n Ingrese el árbol en este formato:
+                            Ejemplo: A{BC{E{GH}F}D}
                             """);
-
-                    String arbolEnstring = sn.next();
-                    l1.insertarDatos(arbolEnstring);
+                    String arbolEnString = sn.nextLine();
+                    arbol.insertarDatos(arbolEnString);
                     break;
-
-
 
                 case 0:
-                    System.out.println("Saliendo del menu....");
-                    Bandera=true;
+                    System.out.println("Saliendo del menú...");
+                    bandera = true;
                     break;
-
 
                 default:
-                    System.out.println("!!!OPCION NO VALIDA!!!");
-                    break;
+                    System.out.println("!!! OPCIÓN NO VÁLIDA !!!");
             }
-
-        }while (!Bandera);
-
-
+        }
+        sn.close();
     }
 }
