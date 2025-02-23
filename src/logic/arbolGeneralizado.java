@@ -1,59 +1,68 @@
 package logic;
 
 public class arbolGeneralizado {
-    private String cadena;
-    private int index;
+    private Nodo raiz;
 
     public arbolGeneralizado() {
-        this.cadena = "";
-        this.index = 0;
+        this.raiz = null;
     }
 
-    public void insertarDatos(String cadena) {
-        this.cadena = cadena;
-        this.index = 0;
-        Nodo raiz = construir();
-        System.out.println("\nÁrbol construido correctamente:");
-        imprimir(raiz, "");
+    public Nodo getRaiz() {
+        return raiz;
     }
 
-    public Nodo construir() {
-        Nodo raiz = null;
+    public void setRaiz(Nodo raiz) {
+        this.raiz = raiz;
+    }
+
+    public void construirDesdeCadena(String cadena) {
+        int[] index = {0};
+        this.raiz = construir(cadena, index);
+    }
+
+    private Nodo construir(String cadena, int[] index) {
+        Nodo raizLocal = null;
         Nodo siguiente = null;
 
-        while (index < cadena.length()) {
-            char c = cadena.charAt(index);
-            index++;
+        while (index[0] < cadena.length()) {
+            char c = cadena.charAt(index[0]);
+            index[0]++;
 
             if (Character.isLetter(c)) {
                 Nodo nuevo = new Nodo(c);
-
-                if (raiz == null) {
-                    raiz = nuevo;
+                if (raizLocal == null) {
+                    raizLocal = nuevo;
                 } else {
                     siguiente.setLiga(nuevo);
                 }
                 siguiente = nuevo;
-            }
-            else if (c == '{') {
+            } else if (c == '{') {
                 if (siguiente != null) {
-                    siguiente.setSubArbol(construir());
+                    siguiente.setSubArbol(construir(cadena, index));
                 }
-            }
-            else if (c == '}') {
-                return raiz;
+            } else if (c == '}') {
+                return raizLocal;
             }
         }
-        return raiz;
+        return raizLocal;
     }
 
-    public void imprimir(Nodo nodo, String prefijo) {
-        if (nodo == null) return;
-        System.out.println(prefijo + nodo.getDato());
+    // Método único para buscar un nodo
+    public Nodo buscarNodo(Nodo p, char valor) {
+        while (p != null) {
+            if (p.getDato() == valor) {
+                return p;
+            }
 
-        if (nodo.getSubArbol() != null) {
-            imprimir(nodo.getSubArbol(), prefijo + "  ");
+            if (p.getSubArbol() != null) {
+                Nodo encontrado = buscarNodo(p.getSubArbol(), valor);
+                if (encontrado != null) {
+                    return encontrado;
+                }
+            }
+
+            p = p.getLiga();
         }
-        imprimir(nodo.getLiga(), prefijo);
+        return null;
     }
 }
