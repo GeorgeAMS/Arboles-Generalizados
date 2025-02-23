@@ -32,7 +32,7 @@ public class menu {
 
                     scanner.nextLine();
                     String arbolEnString = scanner.nextLine();
-                    arbol.construirDesdeCadena(arbolEnString);
+                    arbol.insertarDatos(arbolEnString);
                     System.out.println("Árbol construido correctamente.");
                     break;
 
@@ -61,3 +61,4 @@ public class menu {
         scanner.close();
     }
 }
+
