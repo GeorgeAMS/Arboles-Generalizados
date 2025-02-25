@@ -46,7 +46,9 @@ public class menu {
                         System.out.println("Nodo no encontrado.");
                     }
                     break;
+                case 3:
 
+                    break;
                 case 0:
                     System.out.println("Saliendo del menú...");
                     bandera = true;

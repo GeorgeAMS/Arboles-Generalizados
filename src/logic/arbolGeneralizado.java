@@ -1,13 +1,14 @@
 package logic;
-
+import java.util.Scanner;
 public class arbolGeneralizado {
     private String cadena;
     private int index;
     private Nodo raiz;
-
+    private int con;
     public arbolGeneralizado() {
         this.cadena = "";
         this.index = 0;
+        this.con = 0;
         this.raiz = null;
     }
     public Nodo getRaiz() {
@@ -16,6 +17,7 @@ public class arbolGeneralizado {
     public void insertarDatos(String cadena) {
         this.cadena = cadena;
         this.index = 0;
+        this.con = 0;
         this.raiz = construir();
         System.out.println("\nÁrbol construido correctamente:");
         imprimir(raiz, "");
@@ -27,22 +29,31 @@ public class arbolGeneralizado {
 
         while (index < cadena.length()) {
             char c = cadena.charAt(index);
-            index++;
 
+            index++;
+            con++;
             if (Character.isLetter(c)) {
                 Nodo nuevo = new Nodo(c);
 
                 if (raiz == null) {
                     raiz = nuevo;
+
                 } else {
                     siguiente.setLiga(nuevo);
                 }
                 siguiente = nuevo;
             }
             else if (c == '{') {
-                if (siguiente != null) {
-                    siguiente.setSubArbol(construir());
-                }
+                    if (siguiente != null) {
+                        if (con == 2  ) {
+                           siguiente.setSubArbol(construir());
+                        }
+                        else {
+                            Nodo p = new Nodo(siguiente.getDato());
+                            siguiente.setSubArbol(p);
+                            p.setLiga(construir());
+                        }
+                    }
             }
             else if (c == '}') {
                 return raiz;
@@ -76,6 +87,9 @@ public class arbolGeneralizado {
             p = p.getLiga();
         }
         return null;
+    }
+    public Nodo insertarLetra(char letra) {
+
     }
 
 
