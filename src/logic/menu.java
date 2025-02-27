@@ -23,11 +23,10 @@ public class menu {
                5.  Mostrar raíces          (Listo)
                6.  Mostrar hojas           (Listo)
                7.  Altura de un dato       (Falta, En proceso)
-               8.  Nivel de un dato        (Listo, Falta Validar si no existe)
+               8.  Nivel de un dato        (Listo)
                9.  Imprimir Datos          (Listo)
                10. Mostrar Arbol           (Falta)
                11. Reto 1                  (Falta)
-               12. Reto 2                  (No creo que se haga)
                0. Salir
            -----------------------------------------------------------------------
            """);
@@ -83,18 +82,26 @@ public class menu {
                     arbol.mostrarHijos(arbol.getRaiz());
                     break;
                 case 7:
-                    System.out.println("Ingrese la letra a buscar su altura: ");
-                    char letra = scanner.next().charAt(0);
-                    int altura = arbol.encontrarAltura(arbol.getRaiz(), letra);
-                    if (altura != -1) {
-                        System.out.println("La altura del nodo " + letra + " es: " + altura);
+                    int alturaTotal = arbol.Altura(arbol.getRaiz());
+                    System.out.println("Ingrese el nodo para encontrar su nivel: ");
+                    char Da = scanner.next().charAt(0);
+                    int NiEncontrado = arbol.nivel(arbol.getRaiz(), Da, 0);
+                    if (NiEncontrado != -1) {
+                        int altura = alturaTotal - NiEncontrado;
+                        System.out.println("La altura del dato "+ Da +" es: " + altura);
+                    } else {
+                        System.out.println("El valor que ingresaste anteriormente no fue enbcontrado");
                     }
                     break;
                 case 8:
-                    int Nivel = 0;
-                    System.out.println("Ingrese el valor del nodo a evular su nivel: ");
-                    char Dato = scanner.next().charAt(0);
-                    arbol.nivel(arbol.getRaiz(), Dato, Nivel);
+                    System.out.println("Ingrese el nodo para encontrar su nivel: ");
+                    char D = scanner.next().charAt(0);
+                    int nivelEncontrado = arbol.nivel(arbol.getRaiz(), D, 0);
+                    if (nivelEncontrado != -1) {
+                        System.out.println("El nivel del nodo"+ D +" es: " + nivelEncontrado);
+                    } else {
+                        System.out.println("El valor que ingresaste anteriormente no fue enbcontrado");
+                    }
                     break;
                 case 9:
                     System.out.println("Su Arbol es:");

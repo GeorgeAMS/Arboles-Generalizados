@@ -23,13 +23,10 @@ public class arbolGeneralizado {
         imprimir(raiz, "");
     }
 
-
     //Caso#1:   Crear arbol
     public Nodo construir() {
         Nodo raiz = null;
         Nodo siguiente = null;
-
-
         while (index < cadena.length()) {
             char c = cadena.charAt(index);
 
@@ -38,12 +35,8 @@ public class arbolGeneralizado {
             con++;
             if (Character.isLetter(c)) {
                 Nodo nuevo = new Nodo(c);
-
-
                 if (raiz == null) {
                     raiz = nuevo;
-
-
                 } else {
                     siguiente.setLiga(nuevo);
                 }
@@ -68,7 +61,6 @@ public class arbolGeneralizado {
         return raiz;
     }
 
-
     //Caso#2: Buscar Dato
     public Nodo buscarNodo(Nodo nodo, char valor) {
         Nodo p = nodo;
@@ -87,7 +79,6 @@ public class arbolGeneralizado {
         return null;
     }
 
-
     //Caso#3:   Insertar Dato como hijo
     public Nodo insertarLetra(char Hijo, char padre) {
         Nodo NPapa = buscarNodo(raiz, padre);
@@ -96,15 +87,12 @@ public class arbolGeneralizado {
             return null;
         }
 
-
         Nodo NHijo = new Nodo(Hijo);
-        //Caso NPapa tenia hijos
         if (NPapa.getSubArbol() == null) {
             Nodo NPapa2 = new Nodo(NPapa.getDato());
             NPapa.setSubArbol(NPapa2);
             NPapa2.setLiga(NHijo);
         }
-        //Caso NPapa no tenia hijos
         else {
             Nodo NTemporal = NPapa.getSubArbol();
             while (NTemporal.getLiga() != null) {
@@ -114,7 +102,6 @@ public class arbolGeneralizado {
         }
         return NHijo;
     }
-
 
     //Caso#5: Mostrar Raices
     public void mostrarRaices(Nodo nodo, int C) {
@@ -126,7 +113,6 @@ public class arbolGeneralizado {
         mostrarRaices(nodo.getSubArbol(), C);
         mostrarRaices(nodo.getLiga(), C);
     }
-
 
     //Caso#6: Mostrar Hijos
     public void mostrarHijos(Nodo nodo) {
@@ -140,36 +126,28 @@ public class arbolGeneralizado {
         mostrarHijos(nodo.getLiga());
     }
 
-
     //Caso#7: Altura de un Dato
-    //Caso#7: Altura de un Dato
-    public int encontrarAltura(Nodo nodo, char valor) {
-        Nodo encontrado = buscarNodo(nodo, valor);
-        if (encontrado == null) {
-            System.out.println("El nodo no fue encontrado.");
-            return -1;
+    public int Altura(Nodo nodo) {
+        if (nodo == null) return -1;
+        int alturaSubArbol = Altura(nodo.getSubArbol()) + 1;
+        int alturaLiga = Altura(nodo.getLiga());
+        if (alturaSubArbol >= alturaLiga) {
+            return alturaSubArbol;
+        } else {
+            return alturaLiga;
         }
-        return obtenerAltura(encontrado) - 1;
     }
-
-    public int obtenerAltura(Nodo nodo) {
-        if (nodo == null) return 0;
-        int alturaHijo = obtenerAltura(nodo.getSubArbol());
-        return 1 + alturaHijo;
-    }
-
 
     //Caso#8: Nivel De un Dato
-    public void nivel(Nodo nodo, char Dato, int Nivel) {
-        if (nodo == null) return;
-        if(nodo.getDato() == Dato){
-            System.out.println("El nivel del nodo es: " +Nivel);
-            if (nodo.getSubArbol() != null) return;
+    public int nivel(Nodo nodo, char Dato, int Nivel) {
+        if (nodo == null) return -1;
+        if (nodo.getDato() == Dato) {
+            return Nivel;
         }
-        nivel(nodo.getSubArbol(), Dato, Nivel+1);
-        nivel(nodo.getLiga(), Dato, Nivel);
+        int subArbolNivel = nivel(nodo.getSubArbol(), Dato, Nivel + 1);
+        if (subArbolNivel != -1) return subArbolNivel;
+        return nivel(nodo.getLiga(), Dato, Nivel);
     }
-
 
     //Caso#9:   Imprimir Arbol
     public void imprimir(Nodo nodo, String prefijo) {
