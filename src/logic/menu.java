@@ -1,6 +1,7 @@
 package logic;
 import java.util.Scanner;
 
+
 public class menu {
     public static void main(String[] args) {
         arbolGeneralizado arbol = new arbolGeneralizado();
@@ -8,33 +9,49 @@ public class menu {
         boolean bandera = false;
         int opcion;
 
+
         do {
             System.out.println("""
-            -----------------------------------------------------------------------
-                    Ingrese el número de alguna de las siguientes opciones:
+           -----------------------------------------------------------------------
+                   Ingrese el número de alguna de las siguientes opciones:
 
-                1. Crear Árbol
-                2. Buscar Nodo
-                0. Salir
-            -----------------------------------------------------------------------
-            """);
+
+               1.  Crear Árbol             (Listo)
+               2.  Buscar Nodo             (Listo)
+               3.  Insertar dato           (Listo)
+               4.  Eliminar dato           (En Proceso)
+               5.  Mostrar raíces          (Listo)
+               6.  Mostrar hojas           (Listo)
+               7.  Altura de un dato       (Falta, En proceso)
+               8.  Nivel de un dato        (Listo, Falta Validar si no existe)
+               9.  Imprimir Datos          (Listo)
+               10. Mostrar Arbol           (Falta)
+               11. Reto 1                  (Falta)
+               12. Reto 2                  (No creo que se haga)
+               0. Salir
+           -----------------------------------------------------------------------
+           """);
+
 
             opcion = scanner.nextInt();
+
 
             switch (opcion) {
                 case 1:
                     System.out.println("""
-                            \nPor favor ingrese el árbol con el siguiente formato:
-                            Padres: {
-                            Hermanos: ,
-                            Ejemplo: A{B C{E{G H} F} D}
-                            """);
+                           \nPor favor ingrese el árbol con el siguiente formato:
+                           Padres: {
+                           Hermanos: ,
+                           Ejemplo: A{B C{E{G H} F} D}
+                           """);
+
 
                     scanner.nextLine();
                     String arbolEnString = scanner.nextLine();
                     arbol.insertarDatos(arbolEnString);
                     System.out.println("Árbol construido correctamente.");
                     break;
+
 
                 case 2:
                     System.out.print("Ingrese el carácter a buscar: ");
@@ -47,12 +64,47 @@ public class menu {
                     }
                     break;
                 case 3:
-
+                    System.out.print("Ingrese el Valor del nodo padre: ");
+                    char Padre = scanner.next().charAt(0);
+                    System.out.print("Ingrese el valord del nodo hijo: ");
+                    char Hijo = scanner.next().charAt(0);
+                    Nodo Insertar = arbol.insertarLetra(Hijo, Padre);
+                    if (Insertar != null) {
+                        System.out.println("!!!Nodo " + Hijo + " se agrego correctamente!!!");
+                    } else {
+                        System.out.println("El Nodo padre ingresado no existe.");
+                    }
+                    break;
+                case 5:
+                    int C = 1;
+                    arbol.mostrarRaices(arbol.getRaiz(), C);
+                    break;
+                case 6:
+                    arbol.mostrarHijos(arbol.getRaiz());
+                    break;
+                case 7:
+                    System.out.println("Ingrese la letra a buscar su altura: ");
+                    char letra = scanner.next().charAt(0);
+                    int altura = arbol.encontrarAltura(arbol.getRaiz(), letra);
+                    if (altura != -1) {
+                        System.out.println("La altura del nodo " + letra + " es: " + altura);
+                    }
+                    break;
+                case 8:
+                    int Nivel = 0;
+                    System.out.println("Ingrese el valor del nodo a evular su nivel: ");
+                    char Dato = scanner.next().charAt(0);
+                    arbol.nivel(arbol.getRaiz(), Dato, Nivel);
+                    break;
+                case 9:
+                    System.out.println("Su Arbol es:");
+                    arbol.imprimir(arbol.getRaiz(), "");
                     break;
                 case 0:
                     System.out.println("Saliendo del menú...");
                     bandera = true;
                     break;
+
 
                 default:
                     System.out.println("!!! OPCIÓN NO VÁLIDA !!!");
@@ -60,7 +112,7 @@ public class menu {
             }
         } while (!bandera);
 
+
         scanner.close();
     }
 }
-
